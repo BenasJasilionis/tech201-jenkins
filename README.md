@@ -103,3 +103,60 @@ ssh-add github-key
 ```
 ssh -T git@github.com
 ```
+## CI/CD
+* Use Jenkings because its open source -> its an automation server
+* Used by many people and billion dollar companies
+* Webhook trigger (24/7 listens for changes from local host, if change is detected it sends a notification), technically an API 
+* Anything created in jenkins is a job/task
+* Continuous delivery -> 
+* Continuous deployment->
+* Build 1 block test
+* Build second block test
+* Connect blocks test
+## Continuous integration
+* Continuous integration is the practice of frequantly merging new code changes into a central repository, so that automated building and testing can be done.
+* Changes in code are committed to a central repository using a version control system like git.
+* Under CI, builds and tests are ran automatically
+* Every code revision triggers an automated build and test stage, 
+### Why do continuous integration
+* `Find bugs quicker`- By merging in frequent intervals, bugs do not accumulate, and so they are easier to detect and fix
+* `Improve developer productivity`-  Continuous integration helps your team be more productive by freeing developers from manual tasks and encouraging behaviors that help reduce the number of errors and bugs released to customers
+* `Deliver updates faster` - Continuous integration helps your team deliver updates to their customers faster and more frequently
+## Continuous delivery and deployment
+* Code changes are automatically prepared for release into a production environment
+* All code changes are deployed to a testing environment, and if the tests are passed to a production environment 
+* Continuous delivery automates the entire software release process. Every revision that is committed triggers an automated flow that builds, tests, and then stages the update. The final decision to deploy to a live production environment is triggered by the developer
+* Under continuous deployment, the entire process is automated, meaning that if the tests are passed, the software package is automatically deployed onto the production environent, without human intervention
+### Why use continuous delivery or deployment
+* `Automate the software release process` - Continuous delivery lets your team automatically build, test, and prepare code changes for release to production so that your software delivery is more efficient and rapid
+* `Improve developer productivity` - These practices help your team be more productive by freeing developers from manual tasks and encouraging behaviors that help reduce the number of errors and bugs deployed to customers
+* `Find and address bugs quicker`- Your team can discover and address bugs earlier before they grow into larger problems later with more frequent and comprehensive testing. Continuous delivery lets you more easily perform additional types of tests on your code because the entire process has been automated.
+* `Deliver updates faster` - Continuous delivery helps your team deliver updates to customers faster and more frequently. When continuous delivery is implemented properly, you will always have a deployment-ready build artifact that has passed through a standardized test process.
+
+![](images/Example-of-CI-CD-pipeline.png)
+
+## What is Jenkins
+* Jenkins is an open source continuous integration/continuous delivery and deployment (CI/CD) automation software DevOps tool written in the Java programming language. It is used to implement CI/CD workflows, called pipelines
+* Pipelines automate testing and reporting on isolated changes in a larger code base in real time and facilitates the integration of disparate branches of the code into a main branch
+* They also rapidly detect defects in a code base, build the software, automate testing of their builds, prepare the code base for deployment (delivery), and ultimately deploy code to containers and virtual machines, as well as bare metal and cloud servers
+* Jenkins Pipeline (or simply "Pipeline") is a suite of plugins which supports implementing and integrating continuous delivery pipelines into Jenkins
+* A continuous delivery pipeline is an automated expression of your process for getting software from version control right through to your users and customers
+* Jenkins Pipeline provides an extensible set of tools for modeling simple-to-complex delivery pipelines "as code"
+### Why Jenkins
+* It is an open-source tool with great community support.
+* It is easy to install.
+* It has 1000+ plugins to ease your work. If a plugin does not exist, you can code it and share it with the community.
+* It is free of cost.
+* It is built with Java and hence, it is portable to all the major platforms.
+## Examples of other automation software
+* `Bamboo` - Bamboo is a CI and CD server that is used to automate the release management for software applications, providing a continuous delivery pipeline. The tool schedules and coordinates the work involved in building and testing. Bamboo is an Atlassian product, and can be integrated with many of the company’s tools, such as Jira Software, Fisheye, and Bitbucket. It can also be customized with tons of features and add-ons that can be found at the Atlassian Marketplace (for example, it is possible to get a plugin for Slack
+* `TeamCity` - TeamCity is a Java-based build management and continuous integration server for developers and build engineers. TeamCity is made by JetBrains, the same producer of Intellij Idea, Pycharm, and Android Studio. It has some platform specific features such as running code coverage and a duplicates finder for Java and NET, in addition to being able to customize statistics on build duration, success rate, code quality, and custom metrics.
+## Git workflow
+* A Git workflow is a recipe or recommendation for how to use Git to accomplish work in a consistent and productive manner
+1) Initialize the central repository
+2) Clone the central repository
+3) Make changes on your local machine
+4) Stage and commit the changes
+5) Push new commits to central repository
+
+![](images/git_workflow.png)
