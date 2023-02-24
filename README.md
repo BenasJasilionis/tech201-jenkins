@@ -309,3 +309,14 @@ npm test
 
 ## Additional notes
 * Testing and building is done in the agent node, so that if the tests break the environment, the master node remains intact, therefore maintaining a valid pathway to the production environment
+## Creating a full CI/CD pipeline on jenkins
+1) Create a dev branch on gitbash:
+```
+git checkout -b "dev"
+```
+2) Make a job on Jenkins which tests the app in your dev branch
+3) Create another job which merges the dev branch with the main branch
+4) In the post build actions of the first job, enable the 2nd job to run if the first is successfull
+5) Create an EC2 instance
+5) Create a 3rd job which pushes the merged main branch to EC2 instance
+* Upload .pem file to Jenkins
