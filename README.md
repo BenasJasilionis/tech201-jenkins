@@ -226,3 +226,86 @@ They’ll typically turn the SRS document they created into a more logical struc
 * The SDLC doesn’t end when software reaches the market. Developers must now move into a maintenance mode and begin practicing any activities required to handle issues reported by end-users.
 * Furthermore, developers are responsible for implementing any changes that the software might need after deployment.
 * This can include handling residual bugs that were not able to be patched before launch or resolving new issues that crop up due to user reports. Larger systems may require longer maintenance stages compared to smaller systems.
+## Jenkins
+1) Generate ssh keypair in .ssh folder
+2) Copy benas_jenkins.pub to Github repo with app folder
+3) Copy benas_jenkins key to Jenkins
+4) Build a Jenkins job with the repo - trigger the job
+* Run on agent node so that if it
+## Creating a link between a Github repository and Jenkins- Configure github
+1) Create SSH key pair, with RSA type
+* Open gitbash
+* Cd into .ssh
+* Generate key : 
+```
+ssh-keygen -t rsa -b 4096 -C "email"
+```
+* Can use any email, doesn't have to be github email 
+* Enter file into which youd like to save the key e.g:`name_jenkins`
+* Can skip over the password, just press `ENTER`
+* Creates 2 files, one regular and one .pub
+2) Open the repository with your app folder
+3) Press `Settings` -> `Deploy keys`
+4) On gitbash, in your .ssh folder type `cat file_name.pub` and copy the **FULL** output
+5) On github, click `Add deploy key`
+6) Name the key, with the same name as your file
+7) Paste the key into the `Key` box
+8) Click `Add key`
+## Creating a link between a Github repository and Jenkins- Configure jenkins
+1) Log in to Jenkins
+2) Click `New Item`
+3) Create a `Freestyle` job
+4) Optionally add a description, e.g. tes CI, github https, ssh key
+5) Tick `Discard old builds`
+6) `Max # of builds to keep` enter 3
+7) Tick `Github project`
+8) Enter the https address of your selected repository
+9) Under `Source Code Management`, select `Git`
+10) Enter your `SSH repository address`
+11) Click `Add`
+12) Click `Jenkins`
+13) Under `Kind`, select `SSH Username with private key`
+14) Name the key in `Description`, e.g name_jenkins
+15) Click `Add`
+16) In your `gitbash` terminal, in the `.ssh` folder, print your private key using `cat file_name`
+17) Copy the whole key (beginning of key and ending of key included)
+18) Paste the key into Jenkins
+19) Click `Add`
+20) Under `Build Triggers`, select `GitHub hook trigger GITScm polling`
+21) Under `Build Environment`, select `Provide Node & npm bin/folder PATH`
+22) Enter your `NodeJS Installation`, for me it is sparta-node-js
+23) Under `Build`, select `Execute shell`
+24) Enter the following commands:
+```
+cd app
+npm install 
+npm test
+```
+## Adding a webhook to automate pushes from local host to jenkins
+1) Copy the raw Jenkins url for your prject, **WITHOUT** the directories: e.g. `http://18.130.94.221:8080/`
+2) Open you github repository
+3) Click `Settings` -> `Webhooks` -> `Add webhook`
+4) In the `Payload URL`, paste in the jenkins address
+5) Add `/github-webhook/` on to the end of it, so the final address may look like this : `http://18.130.94.221:8080/github-webhook/`
+6) For `Content type`, select `application/json`
+7) Select `Just the push event`
+8) Tick the `Active` box`
+9) Click `Add webhook`
+10) If done correctly, it should look like this :
+
+![](images/webhook.png)
+
+11) Now go back to your `Jenkins` page
+12) Click `Apply`
+13) Click `Save`
+14) You can now click `Build Now` to run the project
+15) If it runs correctly, you should see the following next to your project name:
+
+![](images/jenkins_success.png)
+
+16) Now, any changes which you push from the tracked repository from your local host, will be aotomatically pushed to Jenkins and ran. With this tutorial we have achieved the `continuous integration` of our code
+
+![](images/cicd_jenkins.png)
+
+## Additional notes
+* Testing and building is done in the agent node, so that if the tests break the environment, the master node remains intact, therefore maintaining a valid pathway to the production environment
