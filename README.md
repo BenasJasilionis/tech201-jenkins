@@ -151,6 +151,7 @@ ssh -T git@github.com
 ## Examples of other automation software
 * `Bamboo` - Bamboo is a CI and CD server that is used to automate the release management for software applications, providing a continuous delivery pipeline. The tool schedules and coordinates the work involved in building and testing. Bamboo is an Atlassian product, and can be integrated with many of the company’s tools, such as Jira Software, Fisheye, and Bitbucket. It can also be customized with tons of features and add-ons that can be found at the Atlassian Marketplace (for example, it is possible to get a plugin for Slack
 * `TeamCity` - TeamCity is a Java-based build management and continuous integration server for developers and build engineers. TeamCity is made by JetBrains, the same producer of Intellij Idea, Pycharm, and Android Studio. It has some platform specific features such as running code coverage and a duplicates finder for Java and NET, in addition to being able to customize statistics on build duration, success rate, code quality, and custom metrics.
+* ` 
 ## Git workflow
 * A Git workflow is a recipe or recommendation for how to use Git to accomplish work in a consistent and productive manner
 1) Initialize the central repository
@@ -160,3 +161,68 @@ ssh -T git@github.com
 5) Push new commits to central repository
 
 ![](images/git_workflow.png)
+
+## Jenkins workflow
+
+![](images/jenkins_workflow.png)
+
+* Changes to the code repository are made, and Jenkins is notified via a webhook
+* Changes are pushed to Jenkins master node
+* The Jenkins master node pushes the target code block to an agent node (can be several agent nodes) for automated testing
+* Agent nodes test and build the code block, sending the results back to the master node
+* If the tests are passed, the master node may either prime the new block for being pushed to the production environment (Continuous delivery) or deploy it immediately (Continuous deployment).
+* If a test is failed, the relevant developers are notified
+* Either way, the next change will then be primed for the same, continuous and autonomous process
+
+## Software Development Life Cycle (SDLC) workflow
+1) Planning Stage
+2) Feasibility or Requirements of Analysis Stage
+3) Design and Prototyping Stage
+4) Software Development Stage
+5) Software Testing Stage
+6) Implementation and Integration
+7) Operations and Maintenance Stage
+
+![](images/sdlc.png)
+
+### Planning stage
+* Phase in which developers will plan for the upcoming project.
+* It helps to define the problem and scope of any existing systems, as well as determine the objectives for their new systems.
+* By developing an effective outline for the upcoming development cycle, they'll theoretically catch problems before they affect development.
+* And help to secure the funding and resources they need to make their plan happen.
+* Perhaps most importantly, the planning stage sets the project schedule, which can be of key importance if development is for a commercial product that must be sent to market by a certain time
+### Feasibility or requirements of Analysis stage
+* The analysis stage includes gathering all the specific details required for a new system as well as determining the first ideas for prototypes.Developers may:
+* Define any prototype system requirements
+* Evaluate alternatives to existing prototypes
+* Perform research and analysis to determine the needs of end-users
+
+Furthermore, developers will often create a software requirement specification or SRS document.
+This includes all the specifications for software, hardware, and network requirements for the system they plan to build. This will prevent them from overdrawing funding or resources when working at the same place as other development teams.
+### Design and Prototyping Stage
+* The design stage is a necessary precursor to the main developer stage.
+* Developers will first outline the details for the overall application, alongside specific aspects, such as its:
+* User interfaces
+* System interfaces
+* Network and network requirements
+* Databases
+
+They’ll typically turn the SRS document they created into a more logical structure that can later be implemented in a programming language. Operation, training, and maintenance plans will all be drawn up so that developers know what they need to do throughout every stage of the cycle moving forward. Once complete, development managers will prepare a design document to be referenced throughout the next phases of the SDLC
+### Development Stage
+* The development stage is the part where developers actually write code and build the application according to the earlier design documents and outlined specifications.
+* This is where Static Application Security Testing or SAST tools come into play.
+* Product program code is built per the design document specifications. In theory, all of the prior planning and outlined should make the actual development phase relatively straightforward.
+* Developers will follow any coding guidelines as defined by the organization and utilize different tools such as compilers, debuggers, and interpreters.
+* Programming languages can include staples such as C++, PHP, and more. Developers will choose the right programming code to use based on the project specifications and requirements
+### Testing stage
+* Building software is not the end.
+* Now it must be tested to make sure that there aren’t any bugs and that the end-user experience will not negatively be affected at any point.
+* During the testing stage, developers will go over their software with a fine-tooth comb, noting any bugs or defects that need to be tracked, fixed, and later retested.
+* It’s important that the software overall ends up meeting the quality standards that were previously defined in the SRS document.
+### Implementation and Integration Stage
+* After testing, the overall design for the software will come together. Different modules or designs will be integrated into the primary source code through developer efforts, usually by leveraging training environments to detect further errors or defects.
+* The information system will be integrated into its environment and eventually installed. After passing this stage, the software is theoretically ready for market and may be provided to any end-users.
+### Maintenance stage
+* The SDLC doesn’t end when software reaches the market. Developers must now move into a maintenance mode and begin practicing any activities required to handle issues reported by end-users.
+* Furthermore, developers are responsible for implementing any changes that the software might need after deployment.
+* This can include handling residual bugs that were not able to be patched before launch or resolving new issues that crop up due to user reports. Larger systems may require longer maintenance stages compared to smaller systems.
