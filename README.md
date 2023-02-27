@@ -394,3 +394,5 @@ ssh -o "StrictHostKeyChecking=no" ubuntu@<ipv4 public ip> <<EOF
 
 EOF
 ```
+
+![](images/cicde.png)
