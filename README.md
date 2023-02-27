@@ -251,11 +251,11 @@ ssh-keygen -t rsa -b 4096 -C "email"
 6) Name the key, with the same name as your file
 7) Paste the key into the `Key` box
 8) Click `Add key`
-## Creating a link between a Github repository and Jenkins- Configure jenkins
+## Creating a link between a Github repository and Jenkins- Configure jenkins - job 1
 1) Log in to Jenkins
 2) Click `New Item`
 3) Create a `Freestyle` job
-4) Optionally add a description, e.g. tes CI, github https, ssh key
+4) Optionally add a description, e.g. test CI, github https, ssh key
 5) Tick `Discard old builds`
 6) `Max # of builds to keep` enter 3
 7) Tick `Github project`
@@ -320,3 +320,77 @@ git checkout -b "dev"
 5) Create an EC2 instance
 5) Create a 3rd job which pushes the merged main branch to EC2 instance
 * Upload .pem file to Jenkins
+
+rsync -avz -e "ssh -o StrictHostKeyChecking=no" app ubuntu@3.250.138.198:/home/ubuntu
+rsync -avz -e "ssh -o StrictHostKeyChecking=no" environment ubuntu@3.250.138.198:/home/ubuntu
+ssh -o "StrictHostKeyChecking=no" ubuntu@3.250.138.198 <<EOF
+ 
+EOF
+
+
+scp -v -r -o StrictHostKeyChecking=no app/ ubuntu@52.212.201.239:/home/ubuntu/
+
+## Setting up a CI/CDe pipeline using Jenkins - Job 2
+1) Click `New Item`
+3) Create a `Freestyle` job
+4) Optionally add a description, e.g. tes CI, github https, ssh key
+5) Tick `Discard old builds`
+6) `Max # of builds to keep` enter 3
+7) Tick `Github project`
+8) Enter the https address of your selected repository
+9) Under `Source Code Management`, select `Git`
+10) Enter your `SSH repository address`
+11) Select your `SSH key`
+12) Set branch specifier do `*/dev`
+13) Under `Build Triggers`, select `GitHub hook trigger GITScm polling`
+14) Under `Build Environment`, select `Provide Node & npm bin/folder PATH`
+15) Enter your `NodeJS Installation`, for me it is sparta-node-js
+16) Under `Post-build Actions`, select `Build other projects`
+17) Enter your job 3 name
+18) Select `Trigger only if build is stable`
+19) Still under `Post-build Actions`, select `Git Publisher`
+20) Tick `Push Only if Build Succeeds`
+21) Tick `Merge Results`
+22) Tick `Force Push`
+23) Under `Branches`, `Branch to push` enter `main`
+24) Under `Brancehs`, `Target remote name` enter `origin`
+25) Click `Apply` and `Save`
+## Setting up a CI/CDe pipeline using Jenkins - Job 3
+**Note- Before starting this job you need to set up an EC2 instance"
+1) Click `New Item`
+3) Create a `Freestyle` job
+4) Optionally add a description, e.g. tes CI, github https, ssh key
+5) Tick `Discard old builds`
+6) `Max # of builds to keep` enter 3
+7) Tick `Github project`
+8) Enter the https address of your selected repository
+9) Under `Source Code Management`, select `Git`
+10) Enter your `SSH repository address`
+11) Select your `SSH key`
+12) Set branch specifier do `*/main`
+13) Under `Build Triggers`, select `GitHub hook trigger GITScm polling`
+14) Under `Build Environment`, select `Provide Node & npm bin/folder PATH`
+15) Under `Build environment`, select `SSH Agent` and enter your .pem file key that you use to connect to Amazon EC2
+15) Enter your `NodeJS Installation`, for me it is sparta-node-js
+16) Under `Build`, select Execute shell
+17) Enter the following code:
+```
+scp -v -r -o StrictHostKeyChecking=no app/ ubuntu@<ipv4 public 1p>:/home/ubuntu/
+ssh -A -o StrictHostKeyChecking=no ubuntu@<ipv4 public ip> <<EOF
+
+cd app
+npm install
+pm2 kill
+nohup npm start 2>/dev/null 1>/dev/null&
+```
+* Or you can run :
+```
+rsync -avz -e "ssh -o StrictHostKeyChecking=no" app ubuntu@<ipv4 public ip>:/home/ubuntu
+ssh -o "StrictHostKeyChecking=no" ubuntu@<ipv4 public ip> <<EOF
+    sudo bash ./app/provision.sh
+    cd app
+    npm install
+    nohup npm start 2>/dev/null 1>/dev/null&
+
+EOF
+```
